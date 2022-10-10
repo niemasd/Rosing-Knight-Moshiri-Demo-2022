@@ -201,3 +201,16 @@ fpga_tn93 -input {TRIMMED_MSA} -o {TN93_CSV}
 ### Descriptions of Files and CLI Options
 * `{TRIMMED_MSA}` = The trimmed MSA output by Plugin 1
 * `{TN93_CSV}` = The output TN93 pairwise distances
+
+# `Dockerfile` List for Programs
+To aid with installing the various tools needed for these plugins, I've created `Dockerfile`s for the mentioned tools, which contain specific commands needed to compile + install the tools.
+
+* **BWA:** https://github.com/Niema-Docker/bwa/blob/main/Dockerfile
+* **Samtools:** https://github.com/Niema-Docker/samtools/blob/main/Dockerfile
+* **Bowtie2:** https://github.com/Niema-Docker/bowtie2/blob/main/Dockerfile
+* **Pigz:** `sudo apt-get install -y pigz`
+* **Minimap2:** https://github.com/Niema-Docker/minimap2/blob/main/Dockerfile
+* **iVar:** https://github.com/Niema-Docker/ivar/blob/main/Dockerfile
+* **ViralMSA:** https://github.com/niemasd/ViralMSA#installation
+* **trim_msa.py:** https://github.com/niemasd/tools/blob/master/trim_msa.py
+* **tn93:** https://github.com/Niema-Docker/tn93/blob/main/Dockerfile
