@@ -70,7 +70,7 @@ The only output files we care about are `{SORTED_BAM}` and the index file produc
 * `{DV_LOG}` = Output DeepVariant log file (just the filename, not the full path)
 
 # UniFrac Pipeline
-In this pipeline, we accelerate host-filtering as well as the to-database read mapping prior to calling Woltka. According to the [Qiita Recommended Default Workflows](https://qiita.ucsd.edu/workflows/), we would just feed our data directly into the Qiita Woltka plugin, and the FPGA read mapper would swap in for whatever read mapper is already being used in the Qiita Woltka plugin (with all else remaining the same).
+In this pipeline, we accelerate host-filtering as well as the to-database read mapping prior to calling Woltka. See [Qiita Recommended Default Workflows](https://qiita.ucsd.edu/workflows/) for details of full pipeline.
 
 ## Plugin 1: Host Filtering
 I'm not sure if our input reads are already trimmed; would be good to check with Tianqi. We've accelerated quality trimming as well, so it would make sense to have an FPGA replacement for the `fastp-minimap2` plugin that uses the FPGA trimmer fed into the FPGA mapper. Tianqi and Tajana would know. The only information I was given was about the actual host filtering (i.e., mapping to human genome), so that's the only step I'll provide commands for here.
