@@ -5,12 +5,6 @@ These plugin descriptions are only for the demo. They may translate to long-term
 
 # DeepVariant Pipeline
 ## Plugin 1: Map Reads to Human Genome
-### Input File
-Reads (FASTQ). For the demo, the FASTQ is assumed to already be trimmed. For long-term use, we would need to add a trimming step at the beginning of this plugin
-
-### Output File
-Indexed read mappings (BAM + BAI).
-
 ### CPU Commands
 ```bash
 bwa index {REF_GENOME_FASTA} # should probably be done before the plugin is executed
@@ -37,8 +31,8 @@ The only output files we care about are `{OUTPUT_SORTED_BAM}` and the index file
 
 * `{REF_GENOME_FASTA}` = The reference genome FASTA (`ucsc_hg19.chr21.fa` for the demo)
 * `[THREADS]` = number of threads (e.g. 16)
-* `{INPUT_READS}` = Input FASTQ file
-  * For the demo, the FASTQ is assumed to already be trimmed, and we'll be using `BGISEQ_PE100_NA12878.sorted.chr21.fastq`
+* `{INPUT_READS}` = Input FASTQ file (`BGISEQ_PE100_NA12878.sorted.chr21.fastq` for the demo)
+  * For the demo, the FASTQ is assumed to already be trimmed
   * For long-term use, we would need to add a trimming step at the beginning of this plugin
 * `{OUTPUT_SAM}` = The initial read mappings as a SAM file
 * `{OUTPUT_BAM}` = The conversion of `{OUTPUT_SAM}` to the BAM format
