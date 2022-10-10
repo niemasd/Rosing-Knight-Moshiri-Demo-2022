@@ -13,8 +13,7 @@ bwa index {REF_GENOME_FASTA} # should probably be done before the plugin is exec
 bwa mem -t [THREADS] -k 21 {REF_GENOME_FASTA} {READS} > output.sam
 
 # everything below this is the same as FPGA
-samtools view -@ [THREADS] -b -S output.sam > output.bam
-samtools sort -@ [THREADS] output.bam -o {SORTED_BAM}
+samtools sort -@ [THREADS] -o {SORTED_BAM} output.sam
 samtools index -@ [THREADS] {SORTED_BAM}
 ```
 
@@ -23,8 +22,7 @@ samtools index -@ [THREADS] {SORTED_BAM}
 fpga_alg_dv -tables {TABLES_FOLDER} -r {READS} -o output.sam
 
 # everything below this is the same as CPU
-samtools view -@ [THREADS] -b -S output.sam > output.bam
-samtools sort -@ [THREADS] output.bam -o {SORTED_BAM}
+samtools sort -@ [THREADS] -o {SORTED_BAM} output.sam
 samtools index -@ [THREADS] {SORTED_BAM}
 ```
 
@@ -131,7 +129,12 @@ samtools sort -@ [THREADS] -o {TRIMMED_SORTED_BAM} trimmed.bam
 ```
 
 ### FPGA Commands
-I didn't see the per-sample read-mapping + trimming commands from Tianqi for the per-sample viral demo. Tianqi/Behnam should know the correct commands.
+```bash
+fpga_alg_covid -tables {TABLES_FOLDER} -r <(cat {READS_R1} {READS_R2}) -o untrimmed.sam
+fpga_ivar_trim -q 20 -w 4 -m 30 -x 5 -tables ./FOLDER_OF_TABLES/ -r <(cat {READS_R1} {READS_R2}) -o trimmed.sam # this seems incorrect; input should be the SAM/BAM file
+samtools sort -@ [THREADS] -o {TRIMMED_SORTED_BAM} trimmed.sam
+```
+* The second command doesn't seem correct: the trimming should take as input a SAM/BAM file, not a FASTQ file (iVar Trim style trimming runs on a SAM/BAM). Tianqi/Behnam should check this
 
 ### Descriptions of Files and CLI Options
 The only output file we care about is `{TRIMMED_SORTED_BAM}`. All other intermediate files can be deleted when the plugin finishes.
@@ -139,6 +142,8 @@ The only output file we care about is `{TRIMMED_SORTED_BAM}`. All other intermed
 * `{REF_GENOME_FASTA}` = The reference genome FASTA ([`NC_045512.2`](https://github.com/niemasd/SD-COVID-Sequencing/blob/main/reference_genome/NC_045512.2.fas) for the demo)
 * `{READS_R1}` = The R1 reads FASTQ
 * `{READS_R2}` = The R2 reads FASTQ
+* `{TABLES_FOLDER}` = I'm not too sure what this is; Tianqi should clarify
+  * My best guess is that this is some preprocessed "index" of the reference genome used by the FPGA mapper?
 * `{PRIMER_BED}` = Primer BED file ([`sarscov2_v2_primers.bed`](https://github.com/niemasd/SD-COVID-Sequencing/blob/main/primers/swift/sarscov2_v2_primers.bed) for the demo)
 * `{TRIMMED_SORTED_BAM}` = The output trimmed sorted BAM
 
@@ -158,3 +163,41 @@ The only output file we care about is `{CONSENSUS_FASTA}`. All other intermediat
 * `{REF_GENOME_FASTA}` = The reference genome FASTA ([`NC_045512.2`](https://github.com/niemasd/SD-COVID-Sequencing/blob/main/reference_genome/NC_045512.2.fas) for the demo)
 * `{TRIMMED_SORTED_BAM}` = The output of Plugin 1
 * `{CONSENSUS_FASTA}` = The output consensus genome sequence for this sample
+
+# Multi-Sample COVID-19 Pipeline
+## Plugin 1: Multiple Sequence Alignment
+The input to this plugin is the output of Per-Sample COVID-19 Plugin 2 from many samples (i.e., many consensus genome sequences), and this plugin concatenates them and performs reference-guided Multiple Sequence Alignment.
+
+### CPU Commands
+```bash
+cat {FASTA_1} {FASTA_2} {FASTA_N} > unaligned.fas
+python3 ViralMSA.py -s unaligned.fas -r SARS-CoV-2 -e {EMAIL_ADDRESS} -o viralmsa_out -t [THREADS]
+python3 trim_msa.py -i viralmsa_out/*.aln -s 100 -e 50 -o {TRIMMED_MSA}
+```
+
+### FPGA Commands
+None: we have not accelerated Multiple Sequence Alignment (it's plenty fast).
+
+### Descriptions of Files and CLI Options
+The only output file we care about is `{TRIMMED_MSA}`. All other intermediate files can be deleted when the plugin finishes.
+* `{FASTA_1}`, `{FASTA_2}`, ..., `{FASTA_N}` = The consensus genome sequences to align (outputs from multiple calls to Per-Sample COVID-19 Pipeline Plugin 2)
+* `{EMAIL_ADDRESS}` = User's email address (the reference genome is pulled from NCBI using BioPython)
+* `[THREADS]` = Number of threads (e.g. 16)
+* `{TRIMMED_MSA}` = The trimmed MSA to use for downstream analyses
+
+## Plugin 2: Pairwise Distances
+This plugin computes all pairwise TN93 distances from the given trimmed MSA.
+
+### CPU Commands
+```bash
+cat {TRIMMED_MSA} | tn93 -t 1 -l 1 > {TN93_CSV}
+```
+
+### GPU Commands
+```bash
+fpga_tn93 -input {TRIMMED_MSA} -o {TN93_CSV}
+```
+
+### Descriptions of Files and CLI Options
+* `{TRIMMED_MSA}` = The trimmed MSA output by Plugin 1
+* `{TN93_CSV}` = The output TN93 pairwise distances
