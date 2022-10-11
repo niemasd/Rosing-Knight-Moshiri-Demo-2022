@@ -128,10 +128,9 @@ samtools sort -@ [THREADS] -o {TRIMMED_SORTED_BAM} trimmed.bam
 ### FPGA Commands
 ```bash
 fpga_alg_covid -tables {TABLES_FOLDER} -r <(cat {READS_R1} {READS_R2}) -o untrimmed.sam
-fpga_ivar_trim -q 20 -w 4 -m 30 -x 5 -tables ./FOLDER_OF_TABLES/ -r <(cat {READS_R1} {READS_R2}) -o trimmed.sam # this seems incorrect; input should be the SAM/BAM file
+fpga_ivar_trim -q 20 -w 4 -m 30 -x 5 -tables ./FOLDER_OF_TABLES/ -r untrimmed.sam -o trimmed.sam # this seems incorrect; input should be the SAM/BAM file
 samtools sort -@ [THREADS] -o {TRIMMED_SORTED_BAM} trimmed.sam
 ```
-* The second command doesn't seem correct: the trimming should take as input a SAM/BAM file, not a FASTQ file (iVar Trim style trimming runs on a SAM/BAM). Tianqi/Behnam should check this
 
 ### Descriptions of Files and CLI Options
 The only output file we care about is `{TRIMMED_SORTED_BAM}`. All other intermediate files can be deleted when the plugin finishes.
