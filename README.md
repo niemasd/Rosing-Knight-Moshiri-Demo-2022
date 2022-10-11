@@ -124,6 +124,10 @@ pigz -p [THREADS] {SAM}
 * `{SAM_GZ}` = The compressed read mapping output, which will be fed into Woltka
 
 # Per-Sample COVID-19 Pipeline
+## Input Files
+* `BHGYJ7DSX2` = second dataset from ViReflow paper
+  * "2,607 biological samples were sequenced PE150 across four lanes of an S4 flow cell to an average read count of 4.58 M read pairs per sample"
+
 ## Plugin 1: Map and Trim Reads
 Map reads (amplicon sequencing) to SARS-CoV-2 reference genome and primer+quality trim.
 
