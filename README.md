@@ -183,7 +183,7 @@ The only output file we care about is `{CONSENSUS_FASTA}`. All other intermediat
 
 **EDIT:** We don't accelerate MSA, so let's just skip this step and start the "Multi-Sample COVID Pipeline" from the already-aligned MSA. Forget ViralMSA and whatnot for the demo.
 
-### CPU Commands
+### ~CPU Commands~
 IGNORE THIS:
 
 ```bash
@@ -192,10 +192,10 @@ python3 ViralMSA.py -s unaligned.fas -r SARS-CoV-2 -e {EMAIL_ADDRESS} -o viralms
 python3 trim_msa.py -i viralmsa_out/*.aln -s 100 -e 50 -o {TRIMMED_MSA}
 ```
 
-### FPGA Commands
+### ~FPGA Commands~
 ~None: we have not accelerated Multiple Sequence Alignment (it's plenty fast).~
 
-### Descriptions of Files and CLI Options
+### ~Descriptions of Files and CLI Options~
 ~The only output file we care about is `{TRIMMED_MSA}`. All other intermediate files can be deleted when the plugin finishes.~
 * ~`{FASTA_1}`, `{FASTA_2}`, ..., `{FASTA_N}` = The consensus genome sequences to align (outputs from multiple calls to Per-Sample COVID-19 Pipeline Plugin 2)~
 * ~`{EMAIL_ADDRESS}` = User's email address (the reference genome is pulled from NCBI using BioPython)~
