@@ -8,7 +8,8 @@ In this pipeline, we start with human reads (assumed to already be trimmed in th
 
 ## Input Files
 * `ucsc_hg19.chr21.fa` = Chromosome 21 of the [hg19](https://www.ncbi.nlm.nih.gov/assembly/GCF_000001405.13) human reference genome
-* `BGISEQ_PE100_NA12878.sorted.chr21.fataq` = DeepVariant’s training tutorial (short reads: HG001 sequenced by BGISEQ-500 from individual NA12878)
+* `BGISEQ_PE100_NA12878.sorted.chr21.fataq` = DeepVariant’s training tutorial
+  * Short reads (paired-end 100-base): HG001 sequenced by BGISEQ-500 from individual NA12878
   * This is actually a FASTQ file; the `.fataq` extension is a typo
 
 ## Plugin 1: Map Reads to Human Reference Genome
