@@ -30,8 +30,7 @@ samtools index -@ [THREADS] {SORTED_BAM}
 The only output files we care about are `{SORTED_BAM}` and the index file produced by `samtools index`. All other intermediate files can be destroyed when the plugin finishes executing (and commands can be piped together if desired, but perhaps not for the demo to be able to get step-by-step runtimes if desired).
 
 * `{REF_GENOME_FASTA}` = The reference genome FASTA (`ucsc_hg19.chr21.fa` for the demo)
-* `{TABLES_FOLDER}` = I'm not too sure what this is; Tianqi should clarify
-  * My best guess is that this is some preprocessed "index" of the reference genome used by the FPGA mapper?
+* `{TABLES_FOLDER}` = Index files (similar to Minimap2's `.mmi` files) used by the FPGA mapper
 * `[THREADS]` = Number of threads (e.g. 16)
 * `{READS}` = Input FASTQ file (`BGISEQ_PE100_NA12878.sorted.chr21.fastq` for the demo)
   * For the demo, the FASTQ is assumed to already be trimmed
@@ -87,8 +86,7 @@ fpga_holst_filter -tables {TABLES_FOLDER} -r {READS} -o {FILTERED_READS}
 ### Descriptions of Files and CLI Options
 * `{READS}` = Input FASTQ file
   * Double check with Tianqi that the demo reads are already trimmed
-* `{TABLES_FOLDER}` = I'm not too sure what this is; Tianqi should clarify
-  * My best guess is that this is some preprocessed "index" of the reference genome used by the FPGA mapper?
+* `{TABLES_FOLDER}` = Index files (similar to Minimap2's `.mmi` files) used by the FPGA mapper
 * `{FILTERED_READS}` = Host-filtered reads
 
 ## Plugin 2: Woltka
@@ -112,8 +110,7 @@ pigz -p [THREADS] {SAM}
 ### Descriptions of Files and CLI Options
 * `[THREADS]` = Number of threads (e.g. 16)
 * `{READS}` = Input FASTQ file
-* `{TABLES_FOLDER}` = I'm not too sure what this is; Tianqi should clarify
-  * My best guess is that this is some preprocessed "index" of the reference genome used by the FPGA mapper?
+* `{TABLES_FOLDER}` = Index files (similar to Minimap2's `.mmi` files) used by the FPGA mapper
 * `{SAM}` = The output of the FPGA read mapper
 * `{SAM_GZ}` = The compressed read mapping output, which will be fed into Woltka
 
@@ -142,8 +139,7 @@ The only output file we care about is `{TRIMMED_SORTED_BAM}`. All other intermed
 * `{REF_GENOME_FASTA}` = The reference genome FASTA ([`NC_045512.2`](https://github.com/niemasd/SD-COVID-Sequencing/blob/main/reference_genome/NC_045512.2.fas) for the demo)
 * `{READS_R1}` = The R1 reads FASTQ
 * `{READS_R2}` = The R2 reads FASTQ
-* `{TABLES_FOLDER}` = I'm not too sure what this is; Tianqi should clarify
-  * My best guess is that this is some preprocessed "index" of the reference genome used by the FPGA mapper?
+* `{TABLES_FOLDER}` = Index files (similar to Minimap2's `.mmi` files) used by the FPGA mapper
 * `{PRIMER_BED}` = Primer BED file ([`sarscov2_v2_primers.bed`](https://github.com/niemasd/SD-COVID-Sequencing/blob/main/primers/swift/sarscov2_v2_primers.bed) for the demo)
 * `{TRIMMED_SORTED_BAM}` = The output trimmed sorted BAM
 
