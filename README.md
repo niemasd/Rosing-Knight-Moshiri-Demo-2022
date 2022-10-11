@@ -6,6 +6,11 @@ These plugin descriptions are only for the demo. They may translate to long-term
 # DeepVariant Pipeline
 In this pipeline, we start with human reads (assumed to already be trimmed in the demo dataset), and we (1) map to the human reference genome, and then (2) call variants using DeepVariant.
 
+## Input Files
+* `ucsc_hg19.chr21.fa`: Chromosome 21 of the [hg19](https://www.ncbi.nlm.nih.gov/assembly/GCF_000001405.13) human reference genome
+* `BGISEQ_PE100_NA12878.sorted.chr21.fataq`: DeepVariant’s training tutorial (short reads: HG001 sequenced by BGISEQ-500 from individual NA12878)
+  * This is actually a FASTQ file; the `.fataq` extension is a typo
+
 ## Plugin 1: Map Reads to Human Reference Genome
 ### CPU Commands
 ```bash
