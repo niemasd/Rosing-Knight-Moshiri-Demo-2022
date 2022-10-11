@@ -173,6 +173,9 @@ The only output file we care about is `{CONSENSUS_FASTA}`. All other intermediat
 * `{CONSENSUS_FASTA}` = The output consensus genome sequence for this sample
 
 # Multi-Sample COVID-19 Pipeline
+## Input Files
+* `4000.01.viralmsa.aln` = 4000 random complete SARS-CoV-2 genomes from GISAID
+
 ## Plugin 1: Multiple Sequence Alignment
 The input to this plugin is the output of Per-Sample COVID-19 Plugin 2 from many samples (i.e., many consensus genome sequences), and this plugin concatenates them and performs reference-guided Multiple Sequence Alignment.
 
