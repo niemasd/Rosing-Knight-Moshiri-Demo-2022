@@ -178,10 +178,14 @@ The only output file we care about is `{CONSENSUS_FASTA}`. All other intermediat
 ## Input Files
 * `4000.01.viralmsa.aln` = 4000 random complete SARS-CoV-2 genomes from GISAID
 
-## Plugin 1: Multiple Sequence Alignment
-The input to this plugin is the output of Per-Sample COVID-19 Plugin 2 from many samples (i.e., many consensus genome sequences), and this plugin concatenates them and performs reference-guided Multiple Sequence Alignment.
+## ~Plugin 1: Multiple Sequence Alignment~
+~The input to this plugin is the output of Per-Sample COVID-19 Plugin 2 from many samples (i.e., many consensus genome sequences), and this plugin concatenates them and performs reference-guided Multiple Sequence Alignment.~
+
+**EDIT:** We don't accelerate MSA, so let's just skip this step and start the "Multi-Sample COVID Pipeline" from the already-aligned MSA. Forget ViralMSA and whatnot for the demo.
 
 ### CPU Commands
+IGNORE THIS:
+
 ```bash
 cat {FASTA_1} {FASTA_2} {FASTA_N} > unaligned.fas
 python3 ViralMSA.py -s unaligned.fas -r SARS-CoV-2 -e {EMAIL_ADDRESS} -o viralmsa_out -t [THREADS]
@@ -189,14 +193,14 @@ python3 trim_msa.py -i viralmsa_out/*.aln -s 100 -e 50 -o {TRIMMED_MSA}
 ```
 
 ### FPGA Commands
-None: we have not accelerated Multiple Sequence Alignment (it's plenty fast).
+~None: we have not accelerated Multiple Sequence Alignment (it's plenty fast).~
 
 ### Descriptions of Files and CLI Options
-The only output file we care about is `{TRIMMED_MSA}`. All other intermediate files can be deleted when the plugin finishes.
+~The only output file we care about is `{TRIMMED_MSA}`. All other intermediate files can be deleted when the plugin finishes.
 * `{FASTA_1}`, `{FASTA_2}`, ..., `{FASTA_N}` = The consensus genome sequences to align (outputs from multiple calls to Per-Sample COVID-19 Pipeline Plugin 2)
 * `{EMAIL_ADDRESS}` = User's email address (the reference genome is pulled from NCBI using BioPython)
 * `[THREADS]` = Number of threads (e.g. 16)
-* `{TRIMMED_MSA}` = The trimmed MSA to use for downstream analyses
+* `{TRIMMED_MSA}` = The trimmed MSA to use for downstream analyses~
 
 ## Plugin 2: Pairwise Distances
 This plugin computes all pairwise TN93 distances from the given trimmed MSA.
