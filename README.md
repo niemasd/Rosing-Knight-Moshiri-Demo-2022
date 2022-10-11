@@ -7,8 +7,8 @@ These plugin descriptions are only for the demo. They may translate to long-term
 In this pipeline, we start with human reads (assumed to already be trimmed in the demo dataset), and we (1) map to the human reference genome, and then (2) call variants using DeepVariant.
 
 ## Input Files
-* `ucsc_hg19.chr21.fa`: Chromosome 21 of the [hg19](https://www.ncbi.nlm.nih.gov/assembly/GCF_000001405.13) human reference genome
-* `BGISEQ_PE100_NA12878.sorted.chr21.fataq`: DeepVariant’s training tutorial (short reads: HG001 sequenced by BGISEQ-500 from individual NA12878)
+* `ucsc_hg19.chr21.fa` = Chromosome 21 of the [hg19](https://www.ncbi.nlm.nih.gov/assembly/GCF_000001405.13) human reference genome
+* `BGISEQ_PE100_NA12878.sorted.chr21.fataq` = DeepVariant’s training tutorial (short reads: HG001 sequenced by BGISEQ-500 from individual NA12878)
   * This is actually a FASTQ file; the `.fataq` extension is a typo
 
 ## Plugin 1: Map Reads to Human Reference Genome
@@ -75,6 +75,10 @@ The only output files we care about are `{SORTED_BAM}` and the index file produc
 
 # Woltka/UniFrac Pipeline
 In this pipeline, we accelerate host-filtering as well as the to-database read mapping prior to calling Woltka. See [Qiita Recommended Default Workflows](https://qiita.ucsd.edu/workflows/) for details of full pipeline.
+
+## Input Files
+* "dataset3" (`180404_A00169_0085_AH7CV2DMXX` and `180713_A00169_0105_AH5CCJDSXX`)
+* "wol" (Web of Life reference database; not sure what version?)
 
 ## Plugin 1: Host Filtering
 I'm not sure if our input reads are already trimmed; would be good to check with Tianqi. We've accelerated quality trimming as well, so it would make sense to have an FPGA replacement for the `fastp-minimap2` plugin that uses the FPGA trimmer fed into the FPGA mapper. Tianqi and Tajana would know. The only information I was given was about the actual host filtering (i.e., mapping to human genome), so that's the only step I'll provide commands for here.
