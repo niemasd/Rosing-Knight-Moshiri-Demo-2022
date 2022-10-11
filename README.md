@@ -79,6 +79,7 @@ In this pipeline, we accelerate host-filtering as well as the to-database read m
 
 ## Input Files
 * "dataset3" (`180404_A00169_0085_AH7CV2DMXX` and `180713_A00169_0105_AH5CCJDSXX`)
+  * These came from the Knight lab, so hopefully they can identify the details about them
 * "wol" (Web of Life reference database; not sure what version?)
 
 ## Plugin 1: Host Filtering
