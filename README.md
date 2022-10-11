@@ -196,11 +196,11 @@ python3 trim_msa.py -i viralmsa_out/*.aln -s 100 -e 50 -o {TRIMMED_MSA}
 ~None: we have not accelerated Multiple Sequence Alignment (it's plenty fast).~
 
 ### Descriptions of Files and CLI Options
-~The only output file we care about is `{TRIMMED_MSA}`. All other intermediate files can be deleted when the plugin finishes.
-* `{FASTA_1}`, `{FASTA_2}`, ..., `{FASTA_N}` = The consensus genome sequences to align (outputs from multiple calls to Per-Sample COVID-19 Pipeline Plugin 2)
-* `{EMAIL_ADDRESS}` = User's email address (the reference genome is pulled from NCBI using BioPython)
-* `[THREADS]` = Number of threads (e.g. 16)
-* `{TRIMMED_MSA}` = The trimmed MSA to use for downstream analyses~
+~The only output file we care about is `{TRIMMED_MSA}`. All other intermediate files can be deleted when the plugin finishes.~
+* ~`{FASTA_1}`, `{FASTA_2}`, ..., `{FASTA_N}` = The consensus genome sequences to align (outputs from multiple calls to Per-Sample COVID-19 Pipeline Plugin 2)~
+* ~`{EMAIL_ADDRESS}` = User's email address (the reference genome is pulled from NCBI using BioPython)~
+* ~`[THREADS]` = Number of threads (e.g. 16)~
+* ~`{TRIMMED_MSA}` = The trimmed MSA to use for downstream analyses~
 
 ## Plugin 2: Pairwise Distances
 This plugin computes all pairwise TN93 distances from the given trimmed MSA.
