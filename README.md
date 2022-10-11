@@ -68,7 +68,7 @@ The only output files we care about are `{SORTED_BAM}` and the index file produc
 * `[SHARDS]` = Number of shards to run in parallel (seemingly number of threads minus 1? e.g. 15)
 * `{DV_LOG}` = Output DeepVariant log file (just the filename, not the full path)
 
-# UniFrac Pipeline
+# Woltka Pipeline
 In this pipeline, we accelerate host-filtering as well as the to-database read mapping prior to calling Woltka. See [Qiita Recommended Default Workflows](https://qiita.ucsd.edu/workflows/) for details of full pipeline.
 
 ## Plugin 1: Host Filtering
