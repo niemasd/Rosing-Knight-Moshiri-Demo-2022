@@ -64,6 +64,10 @@ sudo docker exec deepvariant0 /opt/deepvariant/bin/run_deepvariant \
   --dry_run=false
 ```
 
+* For the demo, we may want to move the `samtools index` command into this step (the plugin that runs DeepVariant)
+  * The reason for this is that the Plugin 1 only outputs the BAM file (not the index)
+  * The `samtools index` command would go anywhere before the `docker exec` command
+
 ### FPGA Commands
 None: we have not accelerated variant calling yet.
 
