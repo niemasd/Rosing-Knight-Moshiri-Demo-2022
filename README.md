@@ -227,7 +227,7 @@ fpga_tn93 -input {TRIMMED_MSA} -o {TN93_CSV}
 ```
 
 ### Updated Commands for Qiita Distance Matrix Compatibility
-Qiita already has an artifact type for distance matrices, so instead of having this plugin output a CSV file (which is what the `tn93` executable normally outputs), I wrote a script to convert the TN93 output CSV into the format Qiita expects ([`skbio.stats.distance.DistanceMatrix`](http://scikit-bio.org/docs/0.5.2/generated/generated/skbio.stats.distance.DistanceMatrix.html)). The updated commands are as follows:
+Qiita already has an artifact type for distance matrices, so instead of having this plugin output a CSV file (which is what the `tn93` executable normally outputs), I wrote a script ([`tn93_to_distancematrix.py`](https://github.com/niemasd/Rosing-Knight-Moshiri-Demo-2022/blob/main/scripts/tn93_to_distancematrix.py) to convert the TN93 output CSV into the format Qiita expects ([`skbio.stats.distance.DistanceMatrix`](http://scikit-bio.org/docs/0.5.2/generated/generated/skbio.stats.distance.DistanceMatrix.html)). The updated commands are as follows:
 
 #### CPU Commands
 ```bash
