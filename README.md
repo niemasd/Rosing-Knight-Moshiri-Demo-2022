@@ -23,6 +23,9 @@ samtools sort -@ [THREADS] -o {SORTED_BAM} output.sam
 samtools index -@ [THREADS] {SORTED_BAM}
 ```
 
+* For the demo, we may want to move the `samtools index` command into the next step (the plugin that runs DeepVariant)
+  * The reason for this is that the Plugin 1 only outputs the BAM file (not the index)
+
 ### FPGA Commands
 ```bash
 fpga_alg_dv -tables {TABLES_FOLDER} -r {READS} -o output.sam
@@ -31,6 +34,9 @@ fpga_alg_dv -tables {TABLES_FOLDER} -r {READS} -o output.sam
 samtools sort -@ [THREADS] -o {SORTED_BAM} output.sam
 samtools index -@ [THREADS] {SORTED_BAM}
 ```
+
+* For the demo, we may want to move the `samtools index` command into the next step (the plugin that runs DeepVariant)
+  * The reason for this is that the Plugin 1 only outputs the BAM file (not the index)
 
 ### Descriptions of Files and CLI Options
 The only output files we care about are `{SORTED_BAM}` and the index file produced by `samtools index`. All other intermediate files can be destroyed when the plugin finishes executing (and commands can be piped together if desired, but perhaps not for the demo to be able to get step-by-step runtimes if desired).
