@@ -215,19 +215,35 @@ python3 trim_msa.py -i viralmsa_out/*.aln -s 100 -e 50 -o {TRIMMED_MSA}
 ## Plugin 2: Pairwise Distances
 This plugin computes all pairwise TN93 distances from the given trimmed MSA.
 
-### CPU Commands
+### Original Commands
+#### CPU Commands
 ```bash
 cat {TRIMMED_MSA} | tn93 -t 1 -l 1 > {TN93_CSV}
 ```
 
-### GPU Commands
+#### GPU Commands
 ```bash
 fpga_tn93 -input {TRIMMED_MSA} -o {TN93_CSV}
 ```
 
+### Updated Commands for Qiita Distance Matrix Compatibility
+Qiita already has an artifact type for distance matrices, so instead of having this plugin output a CSV file (which is what the `tn93` executable normally outputs), I wrote a script to convert the TN93 output CSV into the format Qiita expects ([`skbio.stats.distance.DistanceMatrix`](http://scikit-bio.org/docs/0.5.2/generated/generated/skbio.stats.distance.DistanceMatrix.html)). The updated commands are as follows:
+
+#### CPU Commands
+```bash
+cat {TRIMMED_MSA} | tn93 -t 1 -l 1 | tn93_to_distancematrix.py -o {DISTANCEMATRIX_FILE}
+```
+
+#### GPU Commands
+```bash
+fpga_tn93 -input {TRIMMED_MSA} -o {TN93_CSV}
+tn93_to_distancematrix.py -i {TN93_CSV} -o {DISTANCEMATRIX_FILE}
+```
+
 ### Descriptions of Files and CLI Options
 * `{TRIMMED_MSA}` = The trimmed MSA output by Plugin 1
-* `{TN93_CSV}` = The output TN93 pairwise distances
+* `{TN93_CSV}` = The output TN93 pairwise distances as a CSV
+* `{DISTANCEMATRIX_FILE}` = The output TN93 pairwise distances as a `skbio.stats.distance.DistanceMatrix` file
 
 # `Dockerfile` List for Programs
 To aid with installing the various tools needed for these plugins, I've created `Dockerfile`s for the mentioned tools, which contain specific commands needed to compile + install the tools.
