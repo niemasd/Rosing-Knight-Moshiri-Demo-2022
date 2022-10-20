@@ -186,7 +186,9 @@ The only output file we care about is `{CONSENSUS_FASTA}`. All other intermediat
 
 # Multi-Sample COVID-19 Pipeline
 ## Input Files
-* `4000.01.viralmsa.aln` = 4000 random complete SARS-CoV-2 genomes from GISAID
+* ~`4000.01.viralmsa.aln` = 4000 random complete SARS-CoV-2 genomes from GISAID~
+  * **EDIT 2022-10-20:** The CPU `tn93` tool refuses to calculate all 4000 choose 2 = 7998000 possible pairwise distances, which breaks the Qiita distance matrix visualization
+  * Instead, we should use this dataset, which is 4674 complete high-coverage genomes from San Diego produced by the SEARCH team: [`sarscov2_search_2021-11-01_2022-10-20.aln.gz`](data/sarscov2_search_2021-11-01_2022-10-20.aln.gz)
 
 ## ~Plugin 1: Multiple Sequence Alignment~
 ~The input to this plugin is the output of Per-Sample COVID-19 Plugin 2 from many samples (i.e., many consensus genome sequences), and this plugin concatenates them and performs reference-guided Multiple Sequence Alignment.~
