@@ -32,7 +32,7 @@ if __name__ == "__main__":
     for line in infile:
         if line.strip() == 'ID1,ID2,Distance':
             continue
-        u, v, d = [x.strip() for x in line.split(',')]; d = float(d)
+        u, v, d = [x.strip() for x in line.replace(', ',' ').split(',')]; d = float(d)
         if u not in dist:
             dist[u] = dict()
         if v not in dist:
